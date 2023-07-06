@@ -1,0 +1,115 @@
+// import { useState } from 'react';
+// import { useQuery, QueryClient, QueryClientProvider } from 'react-query';
+
+// const queryClient = new QueryClient();
+
+// function ItemList() {
+//   const { isLoading, error, data } = useQuery('items', async () => {
+//     const response = await fetch('https://pokeapi.co/api/v2/pokemon/ditto');
+//     return response.json();
+//   });
+
+//   if (isLoading) return <div>Loading...</div>;
+//   if (error) return <div>Error: {error.message}</div>;
+
+//   return (
+//     <div>
+//       <h2>Item List</h2>
+//       <ul>
+//         {data.map((item: any) => (
+//           <li key={item.id}>
+//             <button onClick={() => navigateToItem(item.id)}>{item.name}</button>
+//           </li>
+//         ))}
+//       </ul>
+//     </div>
+//   );
+// }
+
+// function ItemView({ itemId }: { itemId: number }) {
+//   const { isLoading, error, data } = useQuery(['item', itemId], async () => {
+//     const response = await fetch(`https://api.example.com/items/${itemId}`);
+//     return response.json();
+//   });
+
+//   if (isLoading) return <div>Loading...</div>;
+//   if (error) return <div>Error: {error.message}</div>;
+
+//   return (
+//     <div>
+//       <h2>Item Details</h2>
+//       <p>Name: {data.name}</p>
+//       <p>Description: {data.description}</p>
+//     </div>
+//   );
+// }
+
+// function App() {
+//   const [selectedItemId, setSelectedItemId] = useState<number | null>(null);
+
+//   const navigateToItem = (itemId: number) => {
+//     setSelectedItemId(itemId);
+//   };
+
+//   return (
+//     <QueryClientProvider client={queryClient}>
+//       {selectedItemId ? (
+//         <ItemView itemId={selectedItemId} />
+//       ) : (
+//         <ItemList navigateToItem={navigateToItem} />
+//       )}
+//     </QueryClientProvider>
+//   );
+// }
+
+// export default App;
+// componentDidMount() ;
+//     // Simple GET request using fetch
+//     fetch('https://pokeapi.co/api/v2/pokemon/ditto')
+//         .then(response => response.json())
+//         .then(data => this.setState({ totalReactPackages: data.total }));
+//         import React, { useEffect } from 'react';
+
+//         function MyComponent() {
+//           useEffect(() => {
+//             console.log('https://pokeapi.co/api/v2/pokemon/ditto');
+//           }, []);
+        
+//           return <div>My Component</div>;
+//         }
+        
+//         export default MyComponent; 
+
+
+
+
+import { useQuery } from 'react-query';
+import axios from 'axios';
+
+function App() {
+  const { isLoading, error, data } = useQuery('pokemonList', async () => {
+    const response = await axios.get('https://pokeapi.co/api/v2/pokemon/ditton');
+    return response.data.results;
+  });
+
+  if (isLoading) {
+    return "<div>Loading...</div>";
+  }
+
+  if (error) {
+    return "<div>Error fetching data</div>";
+  }
+
+  return (
+    "<div>" +
+    "<h1>Pokemon List</h1>" +
+    "<ul>" +
+      data.map((pokemon) => (
+        "<li key=" + pokemon.name + ">" + pokemon.name + "</li>"
+      )) +
+    "</ul>" +
+  "</div>"
+  );
+}
+
+export default App;
